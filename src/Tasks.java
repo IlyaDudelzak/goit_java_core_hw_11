@@ -8,15 +8,9 @@ public class Tasks {
         int index = 0;
         int amount = 0;
         StringBuilder sb = new StringBuilder();
-        for(String name : nameList) {
-            if(index % 2 > 0) {
-                if (amount > 0) sb.append(", ");
-                sb.append(index);
-                sb.append(". " + name);
-                amount++;
-            }
-            index++;
-        }
+        IntStream.range(0, nameList.size())
+                .mapToObj(i -> i % 2 != 0 ? (i == 1 ? "" : ", ") + i + ". " + nameList.get(i) : "")
+                .forEach(sb::append);
         return sb.toString();
     }
     public static List<String> task2(List<String> strings) {
@@ -26,21 +20,12 @@ public class Tasks {
                 .toList();
     }
     public static String task3(String[] strings) {
-        List<Integer> numberList = new ArrayList<>();
-        for(String string : strings) {
-            String[] separated = string.split(", ");
-            for(String number : separated) {
-                numberList.add(Integer.valueOf(number));
-            }
-        }
-        numberList = numberList.stream().sorted().toList();
+        List<String> vals = new ArrayList<>();
+        Arrays.stream(strings)
+                .forEach(s ->
+                                vals.addAll(List.of(s.split(", "))));
         StringBuilder sb = new StringBuilder();
-        int index = 0;
-        for(Integer number : numberList) {
-            if(index > 0) sb.append(", ");
-            sb.append(number);
-            index++;
-        }
+        vals.stream().sorted().forEach(s -> sb.append((sb.isEmpty() ? "" : ", ") + s));
         return sb.toString();
     }
     public static Stream<Long> randomStream() {
