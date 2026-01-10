@@ -13,30 +13,36 @@ public class Tasks {
                 .forEach(sb::append);
         return sb.toString();
     }
+
     public static List<String> task2(List<String> strings) {
         return strings.stream()
                 .map(s -> s.toUpperCase(Locale.ROOT))
                 .sorted(Comparator.reverseOrder()) // Сортируем сразу в обратном порядке
                 .toList();
     }
+
     public static String task3(String[] strings) {
         List<String> vals = new ArrayList<>();
         Arrays.stream(strings)
                 .forEach(s ->
                                 vals.addAll(List.of(s.split(", "))));
         StringBuilder sb = new StringBuilder();
-        vals.stream().sorted().forEach(s -> sb.append((sb.isEmpty() ? "" : ", ") + s));
+        vals.stream().sorted().forEach(s -> sb.append(sb.isEmpty() ? "" : ", ").append(s));
         return sb.toString();
     }
+
     public static Stream<Long> randomStream() {
         return randomStream(3290579824087514605L);
     }
+
     public static Stream<Long> randomStream(long seed) {
         return randomStream(seed, 25214903917L, 11L, 2L << 47);
     }
+
     public static Stream<Long> randomStream(long seed, long a, long c, long m) {
         return Stream.iterate(seed, n -> ((n * a) + c) % m);
     }
+
     public static <T> Stream<T> zip(Stream<T> first, Stream<T> second) {
         List<T> listA = first.toList();
         List<T> listB = second.toList();
